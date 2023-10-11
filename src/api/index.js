@@ -22,6 +22,6 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 // Debe ser el ultimo
 app.use(errors);
 
-app.listen(config.api.port, () => {
+app.listen(config.msRouterAgent.port, () => {
     console.log('Api escuchando en el puerto ', config.msRouterAgent.port);
 });
