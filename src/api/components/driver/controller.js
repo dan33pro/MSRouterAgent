@@ -1,7 +1,7 @@
-const auth = require('../auth');
+const auth = '';
 const TABLA = {
-    name: 'Usuarios',
-    pk: 'cedula',
+    name: 'Conductores',
+    pk: 'cc_conductor',
 };
 
 module.exports = function (injectedStore) {

@@ -3,10 +3,6 @@ const config = require('../../../config');
 const error = require('../utils/error');
 const secret = config.jwt.secret;
 
-function sign(data) {
-    return jwt.sign(data, secret);
-}
-
 function getToken(auth) {
     if (!auth) {
         throw error('No viene Token', 401);
@@ -34,16 +30,14 @@ function decodeHeader(req) {
 }
 
 const check = {
-    own: function(req, owner) {
+    checkRol: function(req, id_rol) {
         const decoded = decodeHeader(req);
-        // Comprobar si es o no propio
-        if (decoded.cedula != owner || !owner) {
-            throw error('No puedes hacer esto', 403);
+        if (decoded.id_rol != id_rol || !id_rol) {
+            throw error('No tiene permisos de administrador', 403);
         }
-    },
+    }
 };
 
 module.exports = {
-    sign,
     check,
 };

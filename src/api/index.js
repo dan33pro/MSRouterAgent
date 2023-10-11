@@ -4,8 +4,8 @@ const bodyParser = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
 
 const config = require('../../config');
-const user = require('./components/user/network.js');
-const auth = require('./components/auth/network.js');
+const road = require('./components/road/network.js');
+const driver = require('./components/driver/network.js');
 const errors = require('../tools/network/errors');
 
 const app = express();
@@ -15,13 +15,13 @@ app.use(bodyParser.json());
 // ROUTER
 const swaggerDoc = require('./swagger.json');
 
-app.use('/api/user', user);
-app.use('/api/auth', auth);
+app.use('/api/road', road);
+app.use('/api/driver', driver);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 // Debe ser el ultimo
 app.use(errors);
 
 app.listen(config.api.port, () => {
-    console.log('Api escuchando en el puerto ', config.api.port);
+    console.log('Api escuchando en el puerto ', config.msRouterAgent.port);
 });
