@@ -1,6 +1,6 @@
 const TABLA = {
-    name: 'Paraderos',
-    pk: 'id_paradero',
+    name: 'ParadasRutas',
+    pk: 'id_parada_ruta',
 };
 
 module.exports = function (injectedStore) {
@@ -17,26 +17,26 @@ module.exports = function (injectedStore) {
     }
 
     async function upsert(body) {
-        const pardero = {
-            nombre_paradero: body.nombre_paradero,
-            latitud: body.latitud,
-            longitud: body.longitud,
+        const parada = {
+            id_tipo_parada_ruta: body.id_tipo_parada_ruta,
+            id_paradero: body.id_paradero,
+            id_ruta: body.id_ruta,
             cc_administrador: body.cc_administrador,
         };
 
-        if (body.accion == 'insert' && (!pardero.nombre_paradero || !pardero.latitud || !pardero.longitud || !pardero.cc_administrador)) {
+        if (body.accion == 'insert' && (!parada.id_tipo_parada_ruta || !parada.id_paradero || !parada.id_ruta || !parada.cc_administrador)) {
             return Promise.reject('No se indico la información necesaria');
-        } else if(body.accion == 'update' && body.id_paradero) {
-            pardero.id_paradero = body.id_paradero;
+        } else if(body.accion == 'update' && body.id_parada_ruta) {
+            parada.id_parada_ruta = body.id_parada_ruta;
         }
 
-        const response = await store.upsert(TABLA, pardero, body.accion);
+        const response = await store.upsert(TABLA, parada, body.accion);
         return response;
     }
 
     function remove(id) {
         if(!id) {
-            return Promise.reject('No se indico el id del paradero');
+            return Promise.reject('No se indico el id de la parada');
         }
         return store.remove(TABLA, id);
     }
