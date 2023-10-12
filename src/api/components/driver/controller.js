@@ -1,4 +1,3 @@
-const auth = '';
 const TABLA = {
     name: 'Conductores',
     pk: 'cc_conductor',
@@ -17,41 +16,32 @@ module.exports = function (injectedStore) {
         return store.get(TABLA, id);
     }
 
-    function findByquery(key, value) {
-        let query = {};
-        query[key] = value;
-        return store.query(TABLA, query);
-    }
-
     async function upsert(body) {
-        const user = {
-            cedula: body.cedula,
-            id_rol: body.id_rol,
-            nombreUsuario: body.nombreUsuario,
-            correoElectronico: body.correoElectronico,
-            codPais: body.codPais,
-            numeroCelular: body.numeroCelular,
-            photo: body.photo,
+        const conductor = {
+            cc_conductor: body.cc_conductor,
+            nombre_conductor: body.nombre_conductor,
+            apellido_conductor: body.apellido_conductor,
+            placa_bus: body.placa_bus,
+            cc_administrador: body.cc_administrador,
         };
-        if (body.accion == 'insert' && (!user.cedula || !user.id_rol || !user.nombreUsuario ||  !user.correoElectronico || !user.codPais || !user.numeroCelular || !body.userPassword)) {
+        if (!conductor.cc_conductor || !conductor.nombre_conductor || !conductor.apellido_conductor ||  !conductor.placa_bus || !conductor.cc_administrador) {
             return Promise.reject('No se indico la información necesaria');
         }
-
-        const response = await store.upsert(TABLA, user, body.accion);
-        if (body.userPassword && body.cedula) {
-            await auth.upsert({
-                cedula: user.cedula,
-                userPassword: body.userPassword,
-            }, body.accion);
-        }
+        const response = await store.upsert(TABLA, conductor, body.accion);
         return response;
     }
 
     function remove(id) {
         if(!id) {
-            return Promise.reject('No se indico el id del usario');
+            return Promise.reject('No se indico la cedula del conductor');
         }
         return store.remove(TABLA, id);
+    }
+
+    function findByquery(key, value) {
+        let query = {};
+        query[key] = value;
+        return store.query(TABLA, query);
     }
 
     return {

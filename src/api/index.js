@@ -5,6 +5,7 @@ const swaggerUi = require('swagger-ui-express');
 
 const config = require('../../config');
 const road = require('./components/road/network.js');
+const bus = require('./components/bus/network.js');
 const driver = require('./components/driver/network.js');
 const errors = require('../tools/network/errors');
 
@@ -16,6 +17,7 @@ app.use(bodyParser.json());
 const swaggerDoc = require('./swagger.json');
 
 app.use('/api/road', road);
+app.use('/api/bus', bus);
 app.use('/api/driver', driver);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 

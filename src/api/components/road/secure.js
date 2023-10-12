@@ -4,8 +4,8 @@ module.exports = function checkAuth(action) {
   function middlewware(req, res, next) {
     switch (action) {
       case "admin":
-        let idAdmin = 2;
-        auth.check.checkRol(req, idAdmin);
+        let owner = req.body.cc_administrador;
+        auth.check.checkRol(req, owner);
         next();
         break;
       default:

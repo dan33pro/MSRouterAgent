@@ -1,6 +1,6 @@
 const TABLA = {
-    name: 'Rutas',
-    pk: 'id_ruta',
+    name: 'Buses',
+    pk: 'placa_bus',
 };
 
 module.exports = function (injectedStore) {
@@ -17,27 +17,23 @@ module.exports = function (injectedStore) {
     }
 
     async function upsert(body) {
-        const ruta = {
-            nombre_ruta: body.nombre_ruta,
-            precio: body.precio,
-            horario_apertura: body.horario_apertura,
-            horario_cierre: body.horario_cierre,
+        const bus = {
+            placa_bus: body.placa_bus,
+            modelo: body.modelo,
+            observaciones: body.observaciones,
+            id_ruta: body.id_ruta,
             cc_administrador: body.cc_administrador,
         };
-
-        if (body.accion == 'insert' && (!ruta.nombre_ruta || !ruta.precio || !ruta.horario_apertura ||  !ruta.horario_cierre || !ruta.cc_administrador)) {
+        if (!bus.placa_bus || !bus.modelo || !bus.observaciones ||  !bus.id_ruta || !bus.cc_administrador) {
             return Promise.reject('No se indico la información necesaria');
-        } else if(body.accion == 'update' && body.id_ruta) {
-            ruta.id_ruta = body.id_ruta;
         }
-
-        const response = await store.upsert(TABLA, ruta, body.accion);
+        const response = await store.upsert(TABLA, bus, body.accion);
         return response;
     }
 
     function remove(id) {
         if(!id) {
-            return Promise.reject('No se indico el id de la ruta');
+            return Promise.reject('No se indico la placa del bus');
         }
         return store.remove(TABLA, id);
     }

@@ -10,7 +10,7 @@ router.get('/:id', get);
 router.get('/:key/:value', findByquery);
 router.post('/', secure('admin'), upsert);
 router.put('/', secure('admin'), upsert);
-router.delete('/:id', secure('admin'), remove);
+router.delete('/:id', remove);
 
 async function list(req, res) {
     try {
