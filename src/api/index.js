@@ -9,6 +9,7 @@ const bus = require('./components/bus/network.js');
 const driver = require('./components/driver/network.js');
 const bus_station = require('./components/bus_station/network.js');
 const bus_stop = require('./components/bus_stop/network.js');
+const user_travel = require('./components/user_travel/network.js');
 const errors = require('../tools/network/errors');
 
 const app = express();
@@ -23,6 +24,7 @@ app.use('/api/bus', bus);
 app.use('/api/driver', driver);
 app.use('/api/bus_station', bus_station);
 app.use('/api/bus_stop', bus_stop);
+app.use('/api/user_travel', user_travel);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 // Debe ser el ultimo
